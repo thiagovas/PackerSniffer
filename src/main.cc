@@ -24,13 +24,13 @@ int main()
     }
     cout << sock_raw << endl;
     
-    /*
+    
     while(true)
     {
-       saddr_size = sizeof(saddr);
-
+        saddr_size = sizeof(saddr);
+        
     }
-    */
+    
         
     close(sock_raw);
     cout << "Finished" << endl;
