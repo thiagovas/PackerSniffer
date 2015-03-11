@@ -1,12 +1,8 @@
-#ifndef _main_h
-#define _main_h
+#ifndef _snf_utility_h
+#define _snf_utility_h
 
 /*
-    Execute this as a administrator, otherwise the socket will not be opened.
-    ICMP  - Protocol used to ping computers and to execute traceroute
-    IGMP - Internet Group Management Protocol
-
-    By Arthur Labeca and Thiago Silva
+    Here we have all the includes and constants that it's used throughout the program.
 */
 
 
@@ -29,4 +25,7 @@
 #include <arpa/inet.h>
 using namespace std;
 
-#endif // END OF #define _main_h
+#define MAX_PACKET_SIZE 65536 // The max size of a tcp packet is 64kb, 65536 bytes.
+#define PI acos(-1)
+
+#endif // END OF #define _snf_utility_h
