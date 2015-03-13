@@ -1,27 +1,59 @@
 #include "snf_process_packet.h"
 
+FILE *logfile;
+struct sockaddr_in source, dest;
+int tcp=0, udp=0, icmp=0, igmp=0, others=0, total=0, egp=0, igp=0;
+
 void init_process_packet()
 {
     logfile = fopen("log.txt", "w");
 }
 
-void ProcessPacket(unsigned char* buffer, int size)
+void close_file()
+{
+    fclose(logfile);
+}
+
+int ProcessPacket(unsigned char* buffer, int size)
 {
     //Get the IP Header part of this packet
     struct iphdr *iph = (struct iphdr*)buffer;
     ++total;
+    
+    // http://en.wikipedia.org/wiki/List_of_IP_protocol_numbers
     switch (iph->protocol) //Check the Protocol and do accordingly...
     {
+        case 1: // ICMP Protocol
+                icmp++;
+            break;
+        
+        case 2: // IGMP Protocol
+            igmp++;
+            break;
+
         case 6:  //TCP Protocol
             ++tcp;
             print_tcp_packet(buffer , size);
             break;
         
+        case 8: // EGP Protocol
+            egp++;
+            break;
+        
+        case 9: // IGP Protocol
+            igp++;
+            break;
+
+        case 17: // UDP Protocol
+            udp++;
+            break;
+
         default: //Some Other Protocol like ARP etc.
             ++others;
             break;
     }
-    printf("TCP : %d   Others : %d   Total : %d\r",tcp,others,total);
+    printf("TCP : %d   UDP : %d   ICMP : %d   IGMP : %d   EGP : %d   IGP : %d   Others : %d   Total : %d\r", tcp, udp, icmp, igmp, egp, igp, others , total);
+    return total;
 }
  
 void print_ip_header(unsigned char* Buffer, int Size)

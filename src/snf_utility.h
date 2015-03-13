@@ -22,10 +22,13 @@
 #include <netinet/tcp.h>   //Provides declarations for tcp header
 #include <netinet/ip.h>    //Provides declarations for ip header
 #include <sys/socket.h>
+#include <sys/ioctl.h>
+#include <net/ethernet.h>
+#include <netinet/if_ether.h>
 #include <arpa/inet.h>
 using namespace std;
 
 #define MAX_PACKET_SIZE 65536 // The max size of a tcp packet is 64kb, 65536 bytes.
 #define PI acos(-1)
 
-#endif // END OF #define _snf_utility_h
+#endif // END OF #define _snfutility_h
