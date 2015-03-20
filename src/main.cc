@@ -9,7 +9,7 @@
 #include "snf_utility.h"
 #include "snf_process_packet.h"
 
-#define LIM 5000
+#define LIM 1000
 
 int main()
 {
@@ -23,7 +23,6 @@ int main()
     // Create a raw socket that shall sniff
     // In case you have any doubt: http://sock-raw.org/papers/sock_raw
     sock_raw = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
-    setsockopt(sock_raw , SOL_SOCKET , SO_BINDTODEVICE , "wlan0" , strlen("wlan0")+ 1 );
     
     if(sock_raw < 0)
     {
@@ -37,7 +36,7 @@ int main()
         saddr_size = sizeof(saddr);
         
         // Receiving a packet
-        data_size = recvfrom(sock_raw , buffer , 65536 , 0 , &saddr , &saddr_size);
+        data_size = recvfrom(sock_raw , buffer , MAX_PACKET_SIZE , 0 , &saddr , (socklen_t*)&saddr_size);
         if(data_size < 0)
         {
             cout << "Failure receiving a packet\n";
@@ -45,7 +44,8 @@ int main()
         }
         if(ProcessPacket(buffer, data_size) > LIM) break;
     }
-         
+    
+    close_file(); // Here I close log.txt
     close(sock_raw);
     cout << "Finished" << endl;
     return 0;
