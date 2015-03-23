@@ -2,11 +2,12 @@
 
 FILE *logfile;
 struct sockaddr_in source, dest;
-int tcp=0, udp=0, icmp=0, igmp=0, others=0, total=0, egp=0, igp=0;
+int tcp=0, udp=0, icmp=0, igmp=0, others=0, total=0;
 
 void init_process_packet()
 {
     logfile = fopen("log.txt", "w");
+    print_mac_address(logfile);
 }
 
 // This method just closes the output file
@@ -34,14 +35,6 @@ int ProcessPacket(unsigned char* buffer, int size)
             ++tcp;
             print_tcp_packet(buffer , size);
             break;
-        
-        case 8: // EGP Protocol
-            egp++;
-            break;
-        
-        case 9: // IGP Protocol
-            igp++;
-            break;
 
         case 17: // UDP Protocol
             udp++;
@@ -51,14 +44,8 @@ int ProcessPacket(unsigned char* buffer, int size)
             ++others;
             break;
     }
-    printf("TCP : %d   UDP : %d   ICMP : %d   IGMP : %d   EGP : %d   IGP : %d   Others : %d   Total : %d\r", tcp, udp, icmp, igmp, egp, igp, others , total);
-    return total;
-}
-
-// http://www.scs.stanford.edu/histar/src/uinc/linux/if_ether.h
-void print_mac_address(unsigned char data[ETH_ALEN])
-{
-    fprintf(logfile,"%.2X:%.2X:%.2X:%.2X:%.2X:%.2X\n", data[0], data[1], data[2], data[3], data[4], data[5] );
+    printf("TCP : %d   UDP : %d   ICMP : %d   IGMP : %d   Others : %d   Total : %d\r", tcp, udp, icmp, igmp, others , total);
+    return tcp;
 }
 
 void print_ethernet_header(unsigned char* Buffer, int Size)
@@ -68,9 +55,9 @@ void print_ethernet_header(unsigned char* Buffer, int Size)
     fprintf(logfile , "\n");
     fprintf(logfile , "Ethernet Header\n");
     fprintf(logfile , "   |-Destination MAC Address : ");
-    print_mac_address(eth->h_dest);
+    print_mac_address(logfile, eth->h_dest);
     fprintf(logfile , "   |-Source MAC Address      : ");
-    print_mac_address(eth->h_source);
+    print_mac_address(logfile, eth->h_source);
     fprintf(logfile , "   |-Protocol            : %u \n",(unsigned short)eth->h_proto);
 }
  
@@ -145,6 +132,7 @@ void print_tcp_packet(unsigned char* Buffer, int Size)
     PrintData(Buffer + header_size , Size - header_size );
                          
     fprintf(logfile , "\n###########################################################");
+    fprintf(logfile , "###########################################");
 }
  
 void PrintData (unsigned char* data , int Size)

@@ -11,7 +11,6 @@ void init_process_packet();
 void close_file();
 void print_ethernet_header(unsigned char*, int);
 int ProcessPacket(unsigned char*, int);
-void print_mac_address(unsigned char data[ETH_ALEN]);
 void print_ip_header(unsigned char*, int);
 void print_tcp_packet(unsigned char*, int);
 void PrintData (unsigned char*, int);

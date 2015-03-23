@@ -9,10 +9,15 @@
 #include "snf_utility.h"
 #include "snf_process_packet.h"
 
-#define LIM 1000
-
-int main()
+int main(int argc, char* argv[])
 {
+    if(argc != 2)
+    {
+        cout << "Usage: ./snf [LIM MAX OF TCP SNIFFED PACKETS]\n";
+        return 1;
+    }
+
+    int LIM = atoi(argv[1]);
     int sock_raw, data_size;
     unsigned int saddr_size;
     struct sockaddr saddr;
@@ -30,7 +35,7 @@ int main()
         return 1;
     }
     init_process_packet();
-
+    
     while(true)
     {
         saddr_size = sizeof(saddr);
@@ -42,11 +47,11 @@ int main()
             cout << "Failure receiving a packet\n";
             return 1;
         }
-        if(ProcessPacket(buffer, data_size) > LIM) break;
+        if(ProcessPacket(buffer, data_size) >= LIM) break;
     }
     
     close_file(); // Here I close log.txt
     close(sock_raw);
-    cout << "Finished" << endl;
+    cout << "\nFinished" << endl;
     return 0;
 }

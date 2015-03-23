@@ -13,6 +13,7 @@
 #include <map>
 #include <string>
 #include <cstdio>
+#include <ctime>
 #include <cstdlib>
 #include <cstring>
 #include <unistd.h>
@@ -28,11 +29,16 @@
 #include <sys/ioctl.h>
 #include <sys/time.h>
 #include <net/ethernet.h>
+#include <net/if.h>
 #include <netinet/if_ether.h>
 #include <arpa/inet.h>
 using namespace std;
 
 #define MAX_PACKET_SIZE 65536 // The max size of a tcp packet is 64kb, 65536 bytes.
 #define PI acos(-1)
+
+void print_mac_address(FILE*);
+void print_ip_address(FILE*);
+void print_mac_address(FILE* output, unsigned char data[ETH_ALEN]);
 
 #endif // END OF #define _snfutility_h
