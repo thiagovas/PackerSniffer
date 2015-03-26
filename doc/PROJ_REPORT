@@ -12,3 +12,10 @@ TODO:
     - Do some research on SSL
     - Do some research on how to clone MAC Address
     - Do some research about wireshark's promiscuous mode
+
+http://www.codeproject.com/Articles/800872/Spoofing-an-IP-is-Hard
+http://www.enderunix.org/docs/en/rawipspoof/
+http://examples.oreilly.com/networksa/tools/blind-spoof.html
+http://packetstormsecurity.com/files/14780/spoof.c.html
+http://www.citi.umich.edu/u/provos/papers/secnet-spoof.txt
+http://forum.codecall.net/topic/62542-raw-sockets-ip-spoofing/
