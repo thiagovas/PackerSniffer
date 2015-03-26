@@ -12,6 +12,7 @@ TODO:
     - Do some research on SSL
     - Do some research on how to clone MAC Address
     - Do some research about wireshark's promiscuous mode
+    - Do some research on how to spoof MAC Address ( I know that there is something called smac )
 
 http://www.codeproject.com/Articles/800872/Spoofing-an-IP-is-Hard
 http://www.enderunix.org/docs/en/rawipspoof/
